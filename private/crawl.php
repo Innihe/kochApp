@@ -31,8 +31,13 @@ function searchUnixKochbuch()
 
   //Links in ein Array
   //Anzahl der Rezeptlinks ermitteln, wird auf der Seite mit "Anzahl Treffer:" ausgegeben
-  $anzahlRezepte = substr($site, strpos($site, "Anzahl Treffer: ") + 16,strpos($site, " ",strpos($site, "Anzahl Treffer: ") + 16)); //hier stimmt was nicht, es macht den substring zu lang
-  echo "Anzahl Rezepte: ".$anzahlRezepte;
+  $sucheAbPosition = strpos($site, "Anzahl Treffer: ") + 16;
+  $sucheBisPosition = strpos($site, "<",strpos($site, "Anzahl Treffer: ") + 16);
+  $laenge = $sucheBisPosition - $sucheAbPosition;
+
+  $anzahlRezepte = substr($site, $sucheAbPosition, $laenge);
+  echo "AnzahlRezepte: ".$anzahlRezepte;
+
   echo $site;
 }
 
