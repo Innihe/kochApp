@@ -29,6 +29,9 @@ function searchUnixKochbuch()
   //Links fixen, so dass sie auf den original Server zeigen
   $site = str_replace('<A HREF="/', '<A HREF="http://kochbuch.unix-ag.uni-kl.de/', $site);
 
+  //Sonderzeichen und Umlaute ReflectionExtension
+  $site = mb_convert_encoding($site, 'HTML-ENTITIES', "iso-8859-1");
+
   //Links in ein Array
   //Anzahl der Rezeptlinks ermitteln, wird auf der Seite mit "Anzahl Treffer:" ausgegeben
   $sucheAbPosition = strpos($site, "Anzahl Treffer: ") + 16;
