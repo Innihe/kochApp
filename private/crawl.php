@@ -1,10 +1,19 @@
 <?php
 
-
-function searchUnixKochbuch()
+//$searchParamArray = array mit strings der suchbegriffe
+//durchsucht unix kochbuch mit übergebenen suchparametern
+//und liefert assoc array rezeptname=>rezeptlink
+function searchUnixKochbuch($searchParamArray)
 {
+  $searchString = "";
+  foreach($searchParamArray as $value)
+  {
+    $searchString .= "+".$value;
+  }
+  $searchString = ltrim($searchString,"+");
+  echo "DEBUG: searchString: ".$searchString;
 
-
+  //TO DO searchstring einbinden
   $url = "http://kochbuch.unix-ag.uni-kl.de/bin/stichwort.php?suche=tomate+gurke&andor=AND&submit=Anfrage+abschicken";
   $site = file_get_contents($url);
 
@@ -59,6 +68,8 @@ function searchUnixKochbuch()
   //echo "DEBUG2: Link1: ".print_r($rezeptArray);
 
   echo $site;
+
+  //TO DO assoc array raus
 }
 
 
