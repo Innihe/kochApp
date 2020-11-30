@@ -3,6 +3,8 @@
 
 function searchUnixKochbuch()
 {
+
+
   $url = "http://kochbuch.unix-ag.uni-kl.de/bin/stichwort.php?suche=tomate+gurke&andor=AND&submit=Anfrage+abschicken";
   $site = file_get_contents($url);
 
@@ -32,18 +34,46 @@ function searchUnixKochbuch()
   //Sonderzeichen und Umlaute ReflectionExtension
   $site = mb_convert_encoding($site, 'HTML-ENTITIES', "iso-8859-1");
 
-  //Links in ein Array
+  ///////** Links in ein Array **\\\\\\\\\\
   //Anzahl der Rezeptlinks ermitteln, wird auf der Seite mit "Anzahl Treffer:" ausgegeben
-  $sucheAbPosition = strpos($site, "Anzahl Treffer: ") + 16;
-  $sucheBisPosition = strpos($site, "<",strpos($site, "Anzahl Treffer: ") + 16);
-  $laenge = $sucheBisPosition - $sucheAbPosition;
+  $anzahlRezepte = copyStringBetween($site, "Anzahl Treffer: ", "<")['copiedString'];
+  //echo "DEBUG: AnzahlRezepte: ".$anzahlRezepte;
 
-  $anzahlRezepte = substr($site, $sucheAbPosition, $laenge);
-  echo "AnzahlRezepte: ".$anzahlRezepte;
+  //Durch gelieferte <UL> loopen und jeden Namen + zugehörigen Link in Array speichern
+  $linkListOffset = 0;
+  for($i = $anzahlRezepte; $i > 0; $i--)
+  {
+    //Rezeptlink holen
+    $rezeptLinkErgebnis = copyStringBetween($site, '<LI><A HREF="', '">', $linkListOffset);
+    //Offset anpassen um Suche nach dem zuletzt gespeicherten Link zu beginnen
+    $linkListOffset = $rezeptLinkErgebnis['lastSearchEndPos'];
+    //Rezeptnamen holen
+    $rezeptNameErgebnis = copyStringBetween($site, '">', '</A>', $linkListOffset);
+
+    //Ergebnis an assoc array anhängen array[rezeptname]=>[rezeptlink]
+    $rezeptArray[$rezeptNameErgebnis['copiedString']] = $rezeptLinkErgebnis['copiedString'];
+
+    //Offset zurücksetzen wenn alle Links aufgenommen
+    if($i == 0){$linkListOffset = 0;}
+  }
+  //echo "DEBUG2: Link1: ".print_r($rezeptArray);
 
   echo $site;
 }
 
+
+//Kopiert einen Bereich aus einem String heraus und gibt ein assoc array wieder das den extrahierten Substring sowie
+//parentstring = zu durchsuchender string, $leftDelimiter = ab welchem Ausdruck soll kopiert werden (exklusiv)
+// $rightDelimiter = bis zu welchem Ausdruck soll kopiert werden (exklusiv)
+//$offset = Beginnt erst ab Zeichen X mit der Suche
+function copyStringBetween (String $parentString, String $leftDelimiter, String $rightDelimiter, int $offset = 0)
+{
+  $kopiereAbPosition = strpos($parentString, $leftDelimiter, $offset) + strlen($leftDelimiter);
+  $kopiereBisPosition = strpos($parentString, $rightDelimiter,$kopiereAbPosition);
+  $laenge = $kopiereBisPosition - $kopiereAbPosition;
+  $subString = substr($parentString, $kopiereAbPosition, $laenge);
+  return array('copiedString' => $subString, 'lastSearchEndPos' => $kopiereAbPosition);
+}
 
 
 ?>
