@@ -13,9 +13,11 @@ function searchUnixKochbuch($searchParamArray)
   $searchString = ltrim($searchString,"+");
   echo "DEBUG: searchString: ".$searchString;
 
+
   //TO DO searchstring einbinden
-  $url = "http://kochbuch.unix-ag.uni-kl.de/bin/stichwort.php?suche=tomate+gurke&andor=AND&submit=Anfrage+abschicken";
+  $url = "http://kochbuch.unix-ag.uni-kl.de/bin/stichwort.php?suche=".$searchString."&andor=AND&submit=Anfrage+abschicken";
   $site = file_get_contents($url);
+  echo "DEBUG URL: ".$url;
 
   //Liefert statt Suchergebnis Hauptseite, allerdings ist dort im Quelltext eine
   //"PHPSESSID" zu finden, sie hat eine Länge von 32 Zeichen,
