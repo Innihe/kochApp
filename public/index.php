@@ -31,12 +31,13 @@
         <form action="includes/logout.inc.php" method="post">
           <button type="submit" name="logout-submit">logout</button>
         </form>
-        <a href="signup.php"><button>Signup</button></a>
+        <a href="signup.php">Signup</a>
       </div>
 
       <div class="search">
         <form action="includes/search.inc.php" method="post">
           <input type="text" name="Suche" placeholder="Suchen">
+          <br>
           <button type="submit" name="search-submit">Suchen</button>
 
       </div>

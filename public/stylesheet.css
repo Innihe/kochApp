@@ -16,11 +16,12 @@ footer {
 div.title{
   margin: auto;
   background-color: white;
+  border: 2px solid orange;
   opacity: 0.5;
   color: black;
   font-size: 30px;
   text-align: center;
-  width: 10%;
+  width: 180px;
   height: auto;
 }
 div.msg{
@@ -28,6 +29,7 @@ div.msg{
   margin-left: auto;
   margin-right: auto;
   background-color: white;
+  border: 2px solid orange;
   opacity: 0.5;
   color: black;
   font-size: 24px;
@@ -40,9 +42,7 @@ div.login{
   margin-top: 4px;
   margin-left: 80%;
   text-align: center;
-  width: 10%;
-  opacity: 0.5;
-  background-color: white;
+  width: 160px;
   padding-bottom: : 2px;
 }
 div.signup{
@@ -50,9 +50,7 @@ div.signup{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-  width: 10%;
-  opacity: 0.5;
-  background-color: white;
+  width: 160px;
   padding-bottom: : 2px;
 }
 
@@ -66,6 +64,23 @@ div.search{
   width: 80%;
   height: auto;
 
+}
+
+a:link, a:visited {
+  background-color: white;
+  opacity: 0.5;
+  color: orange;
+  border: 2px solid orange;
+  text-align: center;
+  font-size: 85%;
+  padding-left:57px;
+  padding-right:57px;
+}
+
+a:hover, a:active {
+  background-color: blue;
+  color: white;
+  opacity: 0.5;
 }
 /* Popup container */
 .popup {
@@ -122,4 +137,55 @@ div.search{
 @keyframes fadeIn {
   from {opacity: 0;}
   to {opacity:1 ;}
+}
+
+input[type=text] {
+
+  border: 2px solid orange;
+  box-sizing: border-box;
+  background-color: white;
+  opacity: 0.5;
+  color: black;
+  width: 100%;
+}
+
+input[type=password] {
+
+  border: 2px solid orange;
+  box-sizing: border-box;
+  background-color: white;
+  opacity: 0.5;
+  color: black;
+  width: 100%;
+}
+
+input[type=button] {
+
+  border: 2px solid orange;
+  box-sizing: border-box;
+  background-color: white;
+  opacity: 0.5;
+  color: black;
+  width: 100%;
+}
+
+
+button[type=submit]{
+
+  border: 2px solid orange;
+  box-sizing: border-box;
+  background-color: white;
+  opacity: 0.5;
+  color: orange;
+  cursor: pointer;
+  width: 100%;
+}
+
+input[type=text]:focus {
+  border: 3px solid blue;
+}
+
+
+input[type=password]:focus {
+  border: 3px solid blue;
 }
