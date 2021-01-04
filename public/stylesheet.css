@@ -55,6 +55,18 @@ div.signup{
   background-color: white;
   padding-bottom: : 2px;
 }
+
+div.search{
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  background-color: white;
+  opacity: 0.5;
+  width: 80%;
+  height: auto;
+
+}
 /* Popup container */
 .popup {
   position: relative;
