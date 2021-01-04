@@ -18,7 +18,24 @@
     <div class="title">Schmeißrein</div>
     <div class="msg">Wilkommen auf Schmeißrein.
       Auf dieser Seite kannst du einfach deine Zutaten einwerfen und es werden dir viele tolle Rezepte angezeigt. </div>
+
+      <div class="login">
+        <form action="includes/login.inc.php" method="post">
+          <input type="text" name="mailuid" placeholder="Username">
+          <br>
+          <input type="password" name="pwd" placeholder="Password">
+          <br>
+          <button type="submit" name="login-submit">login</button>
+        </form>
+
+        <form action="includes/logout.inc.php" method="post">
+          <button type="submit" name="logout-submit">logout</button>
+        </form>
+        <a href="signup.php"><button>Signup</button></a>
+ </div>
+
     </main>
+
 
     <footer>
 
