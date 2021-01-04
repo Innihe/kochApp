@@ -1,4 +1,5 @@
 html {
+  display: block;
   background: url("Background1.png") no-repeat center center fixed;
   background-size: cover;
   font-size: 16px;
@@ -9,8 +10,11 @@ body {
 }
 
 footer {
- color: grey;
- text-align:center;
+ bottom: 0;
+ position: absolute;
+ display: flex;
+ text-align: center;
+ margin-left: 10%;
 }
 
 div.title{
@@ -26,7 +30,7 @@ div.title{
 }
 div.msg{
   margin-top: 4px;
-  margin-left: auto;
+  margin-left: 10%;
   margin-right: auto;
   background-color: white;
   border: 2px solid orange;
@@ -40,7 +44,7 @@ div.msg{
 
 div.login{
   margin-top: 4px;
-  margin-left: 80%;
+  margin-left: 10%;
   text-align: center;
   width: 160px;
   padding-bottom: : 2px;
@@ -56,7 +60,7 @@ div.signup{
 
 div.search{
   margin-top: 4px;
-  margin-left: auto;
+  margin-left: 10%;
   margin-right: auto;
   text-align: left;
   background-color: white;
