@@ -1,8 +1,29 @@
 <?php
+$unixKochbuchPHPSessID;
 
+function crawl()
+{
+  if(isset($_POST['query']))
+  {
+    $searchParamArray = explode(" ", $_POST['ingredients']);
+    $resultArray = searchUnixKochbuch($searchParamArray);
+
+    //assoc array zu html ungeordneter liste
+    //PHP Session ID an Links anhängen, sonst gehen Links ins leere weil Cookiekram
+    global $unixKochbuchPHPSessID;
+    echo "<ul><br>";
+    foreach($resultArray as $recipe => $link)
+    {
+      echo "<li><a href='$link&PHPSESSID=$unixKochbuchPHPSessID'>$recipe</a></li><br>";
+    }
+    echo "</ul><br>";
+  }
+}
 //$searchParamArray = array mit strings der suchbegriffe
 //durchsucht unix kochbuch mit übergebenen suchparametern
 //und liefert assoc array rezeptname=>rezeptlink
+//                                 todo =>rezeptzutaten
+//                                 todo =>rezeptanweisungen
 function searchUnixKochbuch($searchParamArray)
 {
   $searchString = "";
@@ -11,13 +32,13 @@ function searchUnixKochbuch($searchParamArray)
     $searchString .= "+".$value;
   }
   $searchString = ltrim($searchString,"+");
-  echo "DEBUG: searchString: ".$searchString;
+  //echo "DEBUG: searchString: ".$searchString;
 
 
   //TO DO searchstring einbinden
   $url = "http://kochbuch.unix-ag.uni-kl.de/bin/stichwort.php?suche=".$searchString."&andor=AND&submit=Anfrage+abschicken";
   $site = file_get_contents($url);
-  echo "DEBUG URL: ".$url;
+  //echo "DEBUG URL: ".$url;
 
   //Liefert statt Suchergebnis Hauptseite, allerdings ist dort im Quelltext eine
   //"PHPSESSID" zu finden, sie hat eine Länge von 32 Zeichen,
@@ -26,7 +47,12 @@ function searchUnixKochbuch($searchParamArray)
 
   //Session ID extrahieren
   $sessionID = substr($site, $sessionIDStart, 32);
-  echo $sessionID."<br>";
+
+  //Session ID in globaler Variable speichern um HTML UL mit Session ID in den
+  // Links generieren
+  global $unixKochbuchPHPSessID;
+  $unixKochbuchPHPSessID = $sessionID;
+  //echo $sessionID."<br>";
 
 
   //Anfrage nochmal mit Session ID über stream_context_create() als Cookie senden
@@ -69,9 +95,10 @@ function searchUnixKochbuch($searchParamArray)
   }
   //echo "DEBUG2: Link1: ".print_r($rezeptArray);
 
-  echo $site;
+  //echo $site;
 
-  //TO DO assoc array raus
+  //assoc array raus
+  return $rezeptArray;
 }
 
 

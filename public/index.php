@@ -35,10 +35,10 @@
       </div>
 
       <div class="search">
-        <form action="includes/search.inc.php" method="post">
-          <input type="text" name="Suche" placeholder="Suchen">
+        <form action="result.php" method="post">
+          <input type="text" name="ingredients" placeholder="Suchen">
           <br>
-          <button type="submit" name="search-submit">Suchen</button>
+          <button type="submit" name="query">Suchen</button>
 
       </div>
     </main>
