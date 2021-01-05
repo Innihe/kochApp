@@ -6,7 +6,11 @@ function crawl()
   if(isset($_POST['query']))
   {
     //Übergebene Suchparameter zu Arrays und Seiten crawlen
-    $searchParamArray = explode(" ", $_POST['ingredients']);
+    //Zuerst userinput säubern
+    $ingredients = filter_var($_POST['ingredients'], FILTER_SANITIZE_STRING);
+
+    //Suchbegriffe in Array umwandeln
+    $searchParamArray = explode(" ", $ingredients);
     $resultArray = array_merge(searchUnixKochbuch($searchParamArray), searchJobUndFitKochbuch($searchParamArray));
 
     //Rezepte alphabetisch sortieren
@@ -102,6 +106,15 @@ function searchUnixKochbuch($searchParamArray)
 
   //echo $site;
 
+  //check ob es rezepte gab wenn nicht ein array mit einem leeren eintrag liefern
+  //sonst geht alles kaputt :p
+  //Achtung Quickfix mit eigenen Problemen noch umbauen, sonst blank page wenn
+  //keine Seite liefert
+  if(!is_numeric($anzahlRezepte))
+  {
+    $rezeptArray = array("" => "");
+  }
+  
   //assoc array raus
   return $rezeptArray;
 }
@@ -187,6 +200,15 @@ for($i = $anzahlRezepte; $i > 0; $i--)
   if($i == 0){$linkListOffset = 0;}
 }
 
+
+//check ob es rezepte gab wenn nicht ein array mit einem leeren eintrag liefern
+//sonst geht alles kaputt :p
+//Achtung Quickfix mit eigenen Problemen noch umbauen, sonst blank page wenn
+//keine Seite liefert
+if(!is_numeric($anzahlRezepte))
+{
+  $rezeptArray = array("" => "");
+}
 
 //assoc array raus
 return $rezeptArray;
