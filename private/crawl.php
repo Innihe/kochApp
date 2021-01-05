@@ -1,20 +1,22 @@
 <?php
-$unixKochbuchPHPSessID;
+
 
 function crawl()
 {
   if(isset($_POST['query']))
   {
+    //Übergebene Suchparameter zu Arrays und Seiten crawlen
     $searchParamArray = explode(" ", $_POST['ingredients']);
-    $resultArray = searchUnixKochbuch($searchParamArray);
+    $resultArray = array_merge(searchUnixKochbuch($searchParamArray), searchJobUndFitKochbuch($searchParamArray));
+
+    //Rezepte alphabetisch sortieren
+    ksort($resultArray);
 
     //assoc array zu html ungeordneter liste
-    //PHP Session ID an Links anhängen, sonst gehen Links ins leere weil Cookiekram
-    global $unixKochbuchPHPSessID;
     echo "<ul><br>";
-    foreach($resultArray as $recipe => $link)
+    foreach($resultArray as $recipeName => $link)
     {
-      echo "<li><a href='$link&PHPSESSID=$unixKochbuchPHPSessID'>$recipe</a></li><br>";
+      echo "<li><a href='$link'>$recipeName</a></li><br>";
     }
     echo "</ul><br>";
   }
@@ -68,7 +70,7 @@ function searchUnixKochbuch($searchParamArray)
   //Links fixen, so dass sie auf den original Server zeigen
   $site = str_replace('<A HREF="/', '<A HREF="http://kochbuch.unix-ag.uni-kl.de/', $site);
 
-  //Sonderzeichen und Umlaute ReflectionExtension
+  //Sonderzeichen und Umlaute fixen
   $site = mb_convert_encoding($site, 'HTML-ENTITIES', "iso-8859-1");
 
   ///////** Links in ein Array **\\\\\\\\\\
@@ -82,6 +84,9 @@ function searchUnixKochbuch($searchParamArray)
   {
     //Rezeptlink holen
     $rezeptLinkErgebnis = copyStringBetween($site, '<LI><A HREF="', '">', $linkListOffset);
+    //PHP Session ID anhägen sonst Problem
+    $rezeptLinkErgebnis['copiedString'] .= "&PHPSESSID=".$unixKochbuchPHPSessID;
+
     //Offset anpassen um Suche nach dem zuletzt gespeicherten Link zu beginnen
     $linkListOffset = $rezeptLinkErgebnis['lastSearchEndPos'];
     //Rezeptnamen holen
@@ -116,4 +121,74 @@ function copyStringBetween (String $parentString, String $leftDelimiter, String 
 }
 
 
+
+
+function crawltest()
+{
+  if(isset($_POST['query']))
+  {
+    $searchParamArray = explode(" ", $_POST['ingredients']);
+    $resultArray = jobUndFit($searchParamArray);
+
+    echo "<ul><br>";
+    foreach($resultArray as $recipe => $link)
+    {
+      echo "<li><a href='$link'>$recipe</a></li><br>";
+    }
+    echo "</ul><br>";
+  }
+}
+
+function searchJobUndFitKochbuch($searchParamArray)
+{
+  $searchString = "";
+  foreach($searchParamArray as $value)
+  {
+    $searchString .= "+".$value;
+  }
+  $searchString = ltrim($searchString,"+");
+  //echo "DEBUG: searchString: ".$searchString;
+
+
+  //searchstring einbinden
+  $url = "https://www.jobundfit.de/rezepte/rezeptdatenbank/?tx_wwrecipe_fe1%5Bcat%5D%5B4%5D=0&tx_wwrecipe_fe1%5Bingredients%5D=0&tx_wwrecipe_fe1%5Bsearchtext%5D=".$searchString."&tx_wwrecipe_fe1%5Bsearch%5D=1";
+  $site = file_get_contents($url);
+
+  //Sonderzeichen und Umlaute fixen
+  $site = mb_convert_encoding($site, 'HTML-ENTITIES', "iso-8859-1");
+ //  echo $site;
+
+  //Anzahl der Rezeptlinks ermitteln, wird auf der Seite vor " Suchergebnis(se):" ausgegeben
+  //dont touch this shit ^^
+  //die Formatierung unten ist wie gewollt auch wenns broken aussieht
+  $anzahlRezepte = copyStringBetween($site, "</div>
+</form></div>
+
+<h2>", " Suchergebnis(se):</h2>")['copiedString'];
+
+  //Rezepte Beginn ermitteln
+  $offsetStart = strpos($site, " Suchergebnis(se):</h2>");
+
+//Durch geliefertes HTML gehen und Titel und Links herauskopieren
+$linkListOffset = $offsetStart;
+for($i = $anzahlRezepte; $i > 0; $i--)
+{
+  //Rezeptlink holen
+  $rezeptLinkErgebnis = copyStringBetween($site, '<a class="title" href="', '">', $linkListOffset);
+  //Offset anpassen um Suche nach dem zuletzt gespeicherten Link zu beginnen
+  $linkListOffset = $rezeptLinkErgebnis['lastSearchEndPos'];
+  //Rezeptnamen holen
+  $rezeptNameErgebnis = copyStringBetween($site, '">', '</a>', $linkListOffset);
+
+  //Ergebnis an assoc array anhängen array[rezeptname]=>[rezeptlink]
+  $rezeptArray[$rezeptNameErgebnis['copiedString']] = $rezeptLinkErgebnis['copiedString'];
+
+  //Offset zurücksetzen wenn alle Links aufgenommen
+  if($i == 0){$linkListOffset = 0;}
+}
+
+
+//assoc array raus
+return $rezeptArray;
+}
 ?>
