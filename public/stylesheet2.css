@@ -1,0 +1,100 @@
+html {
+  display: block;
+  background: transparent;
+  background-size: cover;
+  font-size: 16px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+main {
+ margin-top: 40px;
+}
+
+footer {
+ bottom: 0;
+ position: absolute;
+ display: flex;
+ align-content: flex-end;
+ flex-wrap: wrap-reverse;
+ text-align: center;
+ margin-left: 10%;
+}
+
+ul {
+ text-align: left;
+ list-style-type: square;
+}
+
+a:link, a:visited {
+  background-color: red;
+  opacity: 0.5;
+  color: black;
+  border: 2px solid black;
+  text-align: center;
+  font-size: 85%;
+  padding-left:57px;
+  padding-right:57px;
+  margin: auto;
+}
+
+a:hover, a:active {
+  background-color: blue;
+  color: white;
+  opacity: 0.5;
+}
+
+#iFrameTitel {
+  margin: auto;
+  background-color: white;
+  border: 2px solid orange;
+  opacity: 0.5;
+  color: black;
+  font-size: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  width: 95%;
+  height: auto;
+}
+
+#iFrameZutaten {
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border: 2px solid orange;
+  opacity: 0.5;
+  color: black;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  width: 90%;
+  height: auto;
+}
+
+#iFrameBeschreibung{
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border: 2px solid orange;
+  opacity: 0.5;
+  color: black;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  width: 90%;
+  height: auto;
+}
+#iFrameQuelle{
+  margin-top: 4px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  border: 2px solid orange;
+  opacity: 0.5;
+  color: black;
+  font-size: 24px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: left;
+  width: 90%;
+  height: auto;
+}

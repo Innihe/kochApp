@@ -1,6 +1,6 @@
 <html>
 <link rel="shortcut icon" type="image/x-icon" href="./3475favicon.ico">
-<link rel="stylesheet" href="stylesheet.css">
+<link rel="stylesheet" href="stylesheet2.css">
 <?php
   include "../private/crawl.php";
 
@@ -59,7 +59,7 @@
       echo "<div id=iFrameBeschreibung>";
       echo $beschreibung;
       echo "</div>";
-      echo "Quelle: <a href=".$link.">$link</a>";
+      echo "<div id='iFrameQuelle'> Quelle: <a href=".$link.">$link</a></div>";
 
 
     }

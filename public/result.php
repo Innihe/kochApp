@@ -9,7 +9,7 @@
 
   </head>
   <body>
-    <div class="background">
+
     <header>
 
       <div class="title">Schmeißraus</div>
@@ -20,9 +20,6 @@
       <?php
         include "../private/crawl.php";
         crawl();
-
-
-
 
        ?>
 
