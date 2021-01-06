@@ -1,5 +1,9 @@
 <?php
 
+function grabRecipe($link)
+{
+
+}
 
 function crawl()
 {
@@ -39,7 +43,8 @@ function crawl()
     echo "<ul><br>";
     foreach($resultArray as $recipeName => $link)
     {
-      echo "<li><a href='$link'>$recipeName</a></li><br>";
+      $link = urlencode($link);
+      echo "<li><a href='./iFrameRecipe.php?link=$link' target='iframe1'>$recipeName</a></li><br>";
     }
     echo "</ul><br>";
   }
@@ -146,7 +151,7 @@ function copyStringBetween (String $parentString, String $leftDelimiter, String 
   $kopiereBisPosition = strpos($parentString, $rightDelimiter,$kopiereAbPosition);
   $laenge = $kopiereBisPosition - $kopiereAbPosition;
   $subString = substr($parentString, $kopiereAbPosition, $laenge);
-  return array('copiedString' => $subString, 'lastSearchEndPos' => $kopiereAbPosition);
+  return array('copiedString' => $subString, 'lastSearchEndPos' => $kopiereBisPosition);
 }
 
 
