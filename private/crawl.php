@@ -11,10 +11,29 @@ function crawl()
 
     //Suchbegriffe in Array umwandeln
     $searchParamArray = explode(" ", $ingredients);
-    $resultArray = array_merge(searchUnixKochbuch($searchParamArray), searchJobUndFitKochbuch($searchParamArray));
 
-    //Rezepte alphabetisch sortieren
-    ksort($resultArray);
+    //Webseiten durchsuchen und Ergebnis speichern
+    $unixKBRecipeArray = searchUnixKochbuch($searchParamArray);
+    $jobUndFitRecipeArray = searchJobUndFitKochbuch($searchParamArray);
+
+    //Wenn mehr als eine Suche erfolgreich die Ergebnisse mergen und alphabetisch sortieren
+    if ($unixKBRecipeArray !== NULL && $jobUndFitRecipeArray !== NULL)
+    {
+      $resultArray = array_merge(searchUnixKochbuch($searchParamArray), searchJobUndFitKochbuch($searchParamArray));
+      ksort($resultArray);
+    }
+    elseif ($unixKBRecipeArray == NULL && $jobUndFitRecipeArray !== NULL)
+    {
+      $resultArray = $jobUndFitRecipeArray;
+    }
+    elseif ($unixKBRecipeArray !== NULL && $jobUndFitRecipeArray == NULL)
+    {
+      $resultArray = $unixKBRecipeArray;
+    }
+    else
+    {
+      $resultArray = array("Leider kein passendes Rezept gefunden. Klicke hier um zurück zur Suche zu gelanden." => "./index.php");
+    }
 
     //assoc array zu html ungeordneter liste
     echo "<ul><br>";
@@ -106,15 +125,12 @@ function searchUnixKochbuch($searchParamArray)
 
   //echo $site;
 
-  //check ob es rezepte gab wenn nicht ein array mit einem leeren eintrag liefern
-  //sonst geht alles kaputt :p
-  //Achtung Quickfix mit eigenen Problemen noch umbauen, sonst blank page wenn
-  //keine Seite liefert
-  if(!is_numeric($anzahlRezepte))
+//check ob es rezepte gab wenn nicht NULL zurückliefern
+  if(!is_numeric($anzahlRezepte) || $anzahlRezepte == 0)
   {
-    $rezeptArray = array("" => "");
+    $rezeptArray = NULL;
   }
-  
+
   //assoc array raus
   return $rezeptArray;
 }
@@ -201,13 +217,10 @@ for($i = $anzahlRezepte; $i > 0; $i--)
 }
 
 
-//check ob es rezepte gab wenn nicht ein array mit einem leeren eintrag liefern
-//sonst geht alles kaputt :p
-//Achtung Quickfix mit eigenen Problemen noch umbauen, sonst blank page wenn
-//keine Seite liefert
-if(!is_numeric($anzahlRezepte))
+//check ob es rezepte gab wenn nicht NULL zurückliefern
+  if(!is_numeric($anzahlRezepte) || $anzahlRezepte == 0)
 {
-  $rezeptArray = array("" => "");
+  $rezeptArray = NULL;
 }
 
 //assoc array raus
