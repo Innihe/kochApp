@@ -18,9 +18,9 @@
       $beschreibung = substr($site, $beschreibungOffset, $beschreibungLength);
 
 
-
-      //echo $site;
-
+      echo "DEBUG URL: ".$link;
+      echo $site;
+/*
       $zutatenArray = explode("\n", $zutaten);
 
       //Leere Array Einträge und Html Tags löschen und
@@ -61,7 +61,7 @@
 
       //echo "<br><br><br>DEBUG: ".print_r($beschreibung);
 
-
+*/
     }
 
  ?>
