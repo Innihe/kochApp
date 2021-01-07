@@ -15,9 +15,7 @@
       $zutaten = copyStringBetween($site, "<PRE>", "\n\n")['copiedString'];
       $beschreibungOffset = copyStringBetween($site, "<PRE>", "\n\n")['lastSearchEndPos'];
       $beschreibungLength = strpos($site, "</PRE>") - $beschreibungOffset;
-      //$beschreibung = "<pre>";
       $beschreibung = substr($site, $beschreibungOffset, $beschreibungLength);
-      //$beschreibug = "</pre>";
 
 
 
@@ -57,9 +55,11 @@
       echo "</div>";
       echo "<br>";
       echo "<div id=iFrameBeschreibung>";
-      echo $beschreibung;
+      echo nl2br($beschreibung);
       echo "</div>";
       echo "<div id='iFrameQuelle'> Quelle: <a href=".$link.">$link</a></div>";
+
+      //echo "<br><br><br>DEBUG: ".print_r($beschreibung);
 
 
     }
