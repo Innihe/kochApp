@@ -1,10 +1,4 @@
 <?php
-
-function grabRecipe($link)
-{
-
-}
-
 function crawl()
 {
   if(isset($_POST['query']))
@@ -49,11 +43,10 @@ function crawl()
     echo "</ul><br>";
   }
 }
+
 //$searchParamArray = array mit strings der suchbegriffe
 //durchsucht unix kochbuch mit übergebenen suchparametern
 //und liefert assoc array rezeptname=>rezeptlink
-//                                 todo =>rezeptzutaten
-//                                 todo =>rezeptanweisungen
 function searchUnixKochbuch($searchParamArray)
 {
   $searchString = "";
@@ -155,34 +148,17 @@ function copyStringBetween (String $parentString, String $leftDelimiter, String 
 }
 
 
-
-
-function crawltest()
-{
-  if(isset($_POST['query']))
-  {
-    $searchParamArray = explode(" ", $_POST['ingredients']);
-    $resultArray = jobUndFit($searchParamArray);
-
-    echo "<ul><br>";
-    foreach($resultArray as $recipe => $link)
-    {
-      echo "<li><a href='$link'>$recipe</a></li><br>";
-    }
-    echo "</ul><br>";
-  }
-}
-
 function searchJobUndFitKochbuch($searchParamArray)
 {
   $searchString = "";
+
   foreach($searchParamArray as $value)
   {
     $searchString .= "+".$value;
   }
+
   $searchString = ltrim($searchString,"+");
   //echo "DEBUG: searchString: ".$searchString;
-
 
   //searchstring einbinden
   $url = "https://www.jobundfit.de/rezepte/rezeptdatenbank/?tx_wwrecipe_fe1%5Bcat%5D%5B4%5D=0&tx_wwrecipe_fe1%5Bingredients%5D=0&tx_wwrecipe_fe1%5Bsearchtext%5D=".$searchString."&tx_wwrecipe_fe1%5Bsearch%5D=1";
@@ -190,7 +166,7 @@ function searchJobUndFitKochbuch($searchParamArray)
 
   //Sonderzeichen und Umlaute fixen
   $site = mb_convert_encoding($site, 'HTML-ENTITIES', "iso-8859-1");
- //  echo $site;
+  //  echo $site;
 
   //Anzahl der Rezeptlinks ermitteln, wird auf der Seite vor " Suchergebnis(se):" ausgegeben
   //dont touch this shit ^^
@@ -203,33 +179,32 @@ function searchJobUndFitKochbuch($searchParamArray)
   //Rezepte Beginn ermitteln
   $offsetStart = strpos($site, " Suchergebnis(se):</h2>");
 
-//Durch geliefertes HTML gehen und Titel und Links herauskopieren
-$linkListOffset = $offsetStart;
-for($i = $anzahlRezepte; $i > 0; $i--)
-{
-  //Rezeptlink holen
-  $rezeptLinkErgebnis = copyStringBetween($site, '<a class="title" href="', '">', $linkListOffset);
-  //Offset anpassen um Suche nach dem zuletzt gespeicherten Link zu beginnen
-  $linkListOffset = $rezeptLinkErgebnis['lastSearchEndPos'];
-  //Rezeptnamen holen
-  $rezeptNameErgebnis = copyStringBetween($site, '">', '</a>', $linkListOffset);
+  //Durch geliefertes HTML gehen und Titel und Links herauskopieren
+  $linkListOffset = $offsetStart;
+  for($i = $anzahlRezepte; $i > 0; $i--)
+  {
+    //Rezeptlink holen
+    $rezeptLinkErgebnis = copyStringBetween($site, '<a class="title" href="', '">', $linkListOffset);
+    //Offset anpassen um Suche nach dem zuletzt gespeicherten Link zu beginnen
+    $linkListOffset = $rezeptLinkErgebnis['lastSearchEndPos'];
+    //Rezeptnamen holen
+    $rezeptNameErgebnis = copyStringBetween($site, '">', '</a>', $linkListOffset);
 
-  //Ergebnis an assoc array anhängen array[rezeptname]=>[rezeptlink]
-  $rezeptArray[$rezeptNameErgebnis['copiedString']] = $rezeptLinkErgebnis['copiedString'];
+    //Ergebnis an assoc array anhängen array[rezeptname]=>[rezeptlink]
+    $rezeptArray[$rezeptNameErgebnis['copiedString']] = $rezeptLinkErgebnis['copiedString'];
 
-  //Offset zurücksetzen wenn alle Links aufgenommen
-  if($i == 0){$linkListOffset = 0;}
-}
+    //Offset zurücksetzen wenn alle Links aufgenommen
+    if($i == 0){$linkListOffset = 0;}
+  }
 
 
-//check ob es rezepte gab wenn nicht NULL zurückliefern
+  //check ob es rezepte gab wenn nicht NULL zurückliefern
   if(!is_numeric($anzahlRezepte) || $anzahlRezepte == 0)
-{
-  $rezeptArray = NULL;
-}
+  {
+    $rezeptArray = NULL;
+  }
 
-//assoc array raus
-
-return $rezeptArray;
+  //assoc array raus
+  return $rezeptArray;
 }
 ?>
