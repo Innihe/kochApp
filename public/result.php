@@ -16,7 +16,7 @@
 
     </header>
     <main>
-      <iframe name="iframe1" src="iframelandingpage.html"></iframe>
+      <iframe name="iframe1" src="iframelandingpage.html" frameborder="0"></iframe>
       <?php
         include "../private/crawl.php";
         crawl();
