@@ -10,16 +10,29 @@
 
       //dont ask why lol
       $link = str_replace("amp;", "", $link);
-      
-      $site = file_get_contents($link);
 
+      $site = file_get_contents($link);
       //Sonderzeichen und Umlaute fixen
       $site = mb_convert_encoding($site, 'HTML-ENTITIES', "iso-8859-1");
-      $titel = copyStringBetween($site,"<H1>","</H1>")['copiedString'];
-      $zutaten = copyStringBetween($site, "<PRE>", "\n\n")['copiedString'];
-      $beschreibungOffset = copyStringBetween($site, "<PRE>", "\n\n")['lastSearchEndPos'];
-      $beschreibungLength = strpos($site, "</PRE>") - $beschreibungOffset;
-      $beschreibung = substr($site, $beschreibungOffset, $beschreibungLength);
+
+      if(strpos($link, 'unix-ag') !== false)
+      {
+
+        $titel = copyStringBetween($site,"<H1>","</H1>")['copiedString'];
+        $zutaten = copyStringBetween($site, "<PRE>", "\n\n")['copiedString'];
+        $beschreibungOffset = copyStringBetween($site, "<PRE>", "\n\n")['lastSearchEndPos'];
+        $beschreibungLength = strpos($site, "</PRE>") - $beschreibungOffset;
+        $beschreibung = substr($site, $beschreibungOffset, $beschreibungLength);
+      }
+      elseif(strpos($link, 'jobundfit') !== false)
+      {
+        $titel = copyStringBetween($site,"<p><b>","</b></p>")['copiedString'];
+        $zutaten = copyStringBetween($site, "<tr><th>Menge</th><th>Zutat</th></tr>", "</table>")['copiedString'];
+        $beschreibung = copyStringBetween($site, "Zubereitung</h2>", '</div><div class="col-md-6 nutrients">')['copiedString'];
+        $zutaten = str_replace("</td>", " ", $zutaten);
+        $zutaten = strip_tags($zutaten);
+      }
+
 
 
 
