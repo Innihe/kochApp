@@ -7,6 +7,10 @@
     if(isset($_GET['link']))
     {
       $link = urldecode($_GET['link']);
+
+      //dont ask why lol
+      $link = str_replace("amp;", "", $link);
+      
       $site = file_get_contents($link);
 
       //Sonderzeichen und Umlaute fixen
