@@ -23,7 +23,7 @@ function crawl()
     //Wenn mehr als eine Suche erfolgreich die Ergebnisse mergen und alphabetisch sortieren
     if ($unixKBRecipeArray !== NULL && $jobUndFitRecipeArray !== NULL)
     {
-      $resultArray = array_merge(searchUnixKochbuch($searchParamArray), searchJobUndFitKochbuch($searchParamArray));
+      $resultArray = array_merge($unixKBRecipeArray, $jobUndFitRecipeArray);
       ksort($resultArray);
     }
     elseif ($unixKBRecipeArray == NULL && $jobUndFitRecipeArray !== NULL)
@@ -229,6 +229,7 @@ for($i = $anzahlRezepte; $i > 0; $i--)
 }
 
 //assoc array raus
+
 return $rezeptArray;
 }
 ?>
