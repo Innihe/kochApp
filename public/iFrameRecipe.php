@@ -15,9 +15,9 @@
       $zutaten = copyStringBetween($site, "<PRE>", "\n\n")['copiedString'];
       $beschreibungOffset = copyStringBetween($site, "<PRE>", "\n\n")['lastSearchEndPos'];
       $beschreibungLength = strpos($site, "</PRE>") - $beschreibungOffset;
-      $beschreibung = "<pre>";
-      $beschreibung .= substr($site, $beschreibungOffset, $beschreibungLength);
-      $beschreibug = "</pre>";
+      //$beschreibung = "<pre>";
+      $beschreibung = substr($site, $beschreibungOffset, $beschreibungLength);
+      //$beschreibug = "</pre>";
 
 
 
