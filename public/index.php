@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+?>
 <html lang="en" dir="ltr">
 <link rel="shortcut icon" type="image/x-icon" href="./3475favicon.ico">
 <link rel="stylesheet" href="stylesheet.css">
@@ -31,7 +34,7 @@
         <form action="includes/logout.inc.php" method="post">
           <button type="submit" name="logout-submit">logout</button>
         </form>
-        <a href="signup.html">Signup</a>
+        <a href="signup.php">Signup</a>
       </div>
 
       <div class="search">

@@ -1,4 +1,7 @@
 <html>
+<?php
+	session_start();
+?>
 <link rel="shortcut icon" type="image/x-icon" href="./3475favicon.ico">
 <link rel="stylesheet" href="stylesheet2.css">
 <?php
