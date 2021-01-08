@@ -12,7 +12,7 @@
 
     <header>
 
-      <div class="title">Schmeißraus</div>
+      <div id="title">Schmeißraus</div>
 
     </header>
     <main>
@@ -23,7 +23,13 @@
 
        ?>
 
+       <footer>
+          <div id="top"><a href="#title"></a></div>
+       </footer>
+
     </main>
+
+
 
   </body>
 

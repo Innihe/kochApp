@@ -10,13 +10,13 @@ main {
 }
 
 footer {
- bottom: 0;
- position: absolute;
+ bottom:0;
+ position: fixed;
  display: flex;
  align-content: flex-end;
  flex-wrap: wrap-reverse;
  text-align: center;
- margin-left: 10%;
+
 }
 
 ul {
