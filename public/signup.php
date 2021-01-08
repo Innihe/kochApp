@@ -21,13 +21,13 @@
 
 			<div class="signup">
 		 <form action= "../private/signup.php" method="post">
-		 <input type="text" name="uid"placeholder="Username">
+		 <input type="text" name="benutzername" placeholder="Username" required>
 		 <br>
-		 <input type="text" name="mail"placeholder="E-mail">
+		 <input type="text" name="email" placeholder="E-mail" required>
 		 <br>
-		 <input type="password" name="pwd"placeholder="Password">
+		 <input type="password" name="passwort" placeholder="Password" required>
 		 <br>
-		 <input type="password" name="pwd-repeat"placeholder="Repeat password">
+		 <input type="password" name="passwort-repeat" placeholder="Repeat password" required>
 		 <br>
 		 <button type="submit" name="signup-submit">Signup</button>
 		 </form>
