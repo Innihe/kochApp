@@ -23,10 +23,10 @@
       Auf dieser Seite kannst du einfach deine Zutaten einwerfen und es werden dir viele tolle Rezepte angezeigt. </div>
 
       <div class="login">
-        <form action="includes/login.inc.php" method="post">
-          <input type="text" name="mailuid" placeholder="Username">
+        <form action="../private/login.php" method="post">
+          <input type="text" name="benutzername" placeholder="Username">
           <br>
-          <input type="password" name="pwd" placeholder="Password">
+          <input type="password" name="passwort" placeholder="Password">
           <br>
           <button type="submit" name="login-submit">login</button>
         </form>

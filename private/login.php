@@ -23,7 +23,7 @@
 			}
 			else
 			{
-				header("Refresh: 5; url=../public/login.html"); // In 5 Sekunden zurückleiten auf index.php
+				header("Refresh: 5; url=../public/index.php"); // In 5 Sekunden zurückleiten auf index.php
 					echo "Benutzername und Passwort stimmen nicht überein! Sie werden zurückgeleitet!";       //fail meldung
 					die();
 			}
