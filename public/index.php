@@ -58,7 +58,7 @@
 
     <footer>
       <a href="Impressum.php">Impressum</a>
-      <a href="Beispiel">Beispiel</a>
+      <a href="favs.php">Favoriten</a>
       <a href="Beispiel">Beispiel</a>
       <a href="Beispiel">Beispiel</a>
       <a href="Beispiel">Beispiel</a>

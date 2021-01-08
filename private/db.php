@@ -103,3 +103,105 @@
 		}
 		dbClose($conn);
 	}
+
+	function dbPullRecipe($titel, $benutzer)
+	{
+		$benutzerid = dbGetBenutzerID($benutzer);
+
+		$conn = connectDB(); //Funktion connectDB() nutzen um Verbindung herzustellen und Rückgabeobjekt in $conn speichern
+
+    //Rezept holen
+    $userQuery = $conn ->prepare("SELECT *
+										FROM rezepte
+										WHERE rezepte.BenutzerkontoID = ? AND rezepte.titel = ?")
+							or die($conn->error);
+		$userQuery->bind_param("ss", $benutzerid, $titel);
+		$userQuery->execute();
+		$userInfo = $userQuery->get_result(); //Abfrageergebnisobjekt holen und speichern
+		$benutzerid = $userInfo->fetch_object(); //Erste Zeile als Ergebnisobjekt speichern
+
+		return $benutzerid;
+		dbClose($conn);
+	}
+  function dbPullFavs($benutzer)
+	{
+		$conn = connectDB(); //Funktion connectDB() nutzen um Verbindung herzustellen und Rückgabeobjekt in $conn speichern
+		//Gespeicherten Rezepte aus der DB holen
+		//kein prepared statement notwendig weil kein user input //
+
+		$benutzerid = dbGetBenutzerID($benutzer);
+		//Abfrage senden und Ergebnis speichern (liefert ein Objekt)
+		$ergebnis = $conn->query("SELECT *
+										FROM rezepte
+										WHERE rezepte.BenutzerkontoID = $benutzerid")
+					or die($conn->error); //Wenn Abfrage fehlschlägt Abbruch und Fehlermeldung
+		return $ergebnis; //Abfrageergebnisobjekt als Rückgabewert
+		dbClose($conn); // Verbindung über dbClose() schliessen, $conn Objekt übergeben
+	}
+
+	function dbGetBenutzerID($benutzer)
+	{
+		$conn = connectDB(); //Funktion connectDB() nutzen um Verbindung herzustellen und Rückgabeobjekt in $conn speichern
+
+    //BenutzerID holen
+    $userQuery = $conn ->prepare("SELECT benutzerkonto.BenutzerkontoID
+										FROM benutzerkonto
+										WHERE benutzerkonto.Benutzername = ?")
+							or die($conn->error);
+		$userQuery->bind_param("s", $benutzer);
+		$userQuery->execute();
+		$userInfo = $userQuery->get_result(); //Abfrageergebnisobjekt holen und speichern
+		$benutzerid = $userInfo->fetch_object()->BenutzerkontoID; //Erste Zeile als Ergebnisobjekt speichern
+
+		return $benutzerid;
+		dbClose($conn);
+	}
+
+	//Überprüft ob Rezept bei Account schon vorhanden, gibt true wieder falls ja
+	function dbCheckForRecipe($benutzername, $titel)
+	{
+		$benutzerid = dbGetBenutzerID($benutzername);
+
+		$conn = connectDB(); //Funktion connectDB() nutzen um Verbindung herzustellen und Rückgabeobjekt in $conn speichern
+
+		//Query mit Prepared Statement
+		$queryStatement = $conn->prepare("SELECT *
+											FROM rezepte
+											WHERE rezepte.BenutzerkontoID = ? AND rezepte.titel = ?")
+							or die($conn->error);
+		$queryStatement->bind_param("is", $benutzerid, $titel);
+		$queryStatement->execute();
+		$ergebnis = $queryStatement->get_result();
+
+		if($ergebnis->num_rows >= 1)
+		{
+				return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+  function dbNewFav($titel, $zutaten, $beschreibung, $benutzer)
+	{
+		$benutzerid = dbGetBenutzerID($benutzer);
+
+		$conn = connectDB(); //Funktion connectDB() nutzen um Verbindung herzustellen und Rückgabeobjekt in $conn speichern
+
+		//Insert mit Prepared Statement
+		$insertStatement = $conn->prepare("INSERT INTO rezepte (titel, zutaten, beschreibung, BenutzerkontoID)
+											VALUES (?, ?, ?, ?)")
+							        or die($conn->error);
+		$insertStatement->bind_param("sssi", $titel, $zutaten, $beschreibung, $benutzerid); //$titel und $inhalt wurden als Argumente übergeben, BenutzerkontoID und Email werden aus vorherigem Abfrageergebnisobjekt bezogen
+		$insertStatement->execute();
+		dbClose($conn); // Verbindung über dbClose() schliessen, $conn Objekt übergeben
+	}
+
+  //Wenn DB alles fertig fertig
+	function dbClose($conn)
+	{
+		//$ergebnis->free(); //Objekt verwerfen
+		$conn->close();		//Verbindung zur Datenbank schliessen
+	}
