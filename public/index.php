@@ -31,7 +31,7 @@
         <form action="includes/logout.inc.php" method="post">
           <button type="submit" name="logout-submit">logout</button>
         </form>
-        <a href="signup.php">Signup</a>
+        <a href="signup.html">Signup</a>
       </div>
 
       <div class="search">
