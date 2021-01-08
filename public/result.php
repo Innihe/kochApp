@@ -15,7 +15,7 @@
 
     <header>
 
-      <div class="title">Schmeißraus</div>
+      <div id="title">Schmeißraus</div>
 
     </header>
     <main>
@@ -26,7 +26,14 @@
 
        ?>
 
+       <footer>
+          <div id="top"><a href="#title">Top</a></div>
+          <div id="home"><a href="index.php">Start</a></div>
+       </footer>
+
     </main>
+
+
 
   </body>
 
