@@ -22,11 +22,12 @@ footer {
  bottom: 0;
  position: fixed;
  display: flex;
- align-content: flex-end;
- flex-wrap: wrap-reverse;
+ align-content: flex-start;
+ flex-direction: column;
+ flex-wrap: wrap;
  text-align: center;
  margin-left: 10%;
- margin-right: 80px;
+ margin-right: 3%;
 }
 
 ul {
@@ -116,9 +117,6 @@ a:hover, a:active {
   opacity: 0.5;
 }
 
-#top {
-width: 50%;
-}
 input[type=text] {
 
   border: 2px solid orange;

@@ -24,7 +24,8 @@
        ?>
 
        <footer>
-          <div id="top"><a href="#title"></a></div>
+          <div id="top"><a href="#title">Top</a></div>
+          <div id="home"><a href="index.php">Start</a></div>
        </footer>
 
     </main>
