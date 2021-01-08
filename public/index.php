@@ -22,20 +22,29 @@
     <div class="msg">Wilkommen auf Schmeißrein.
       Auf dieser Seite kannst du einfach deine Zutaten einwerfen und es werden dir viele tolle Rezepte angezeigt. </div>
 
-      <div class="login">
-        <form action="../private/login.php" method="post">
-          <input type="text" name="benutzername" placeholder="Username">
-          <br>
-          <input type="password" name="passwort" placeholder="Password">
-          <br>
-          <button type="submit" name="login-submit">login</button>
-        </form>
-
-        <form action="../private/logout.php" method="post">
-          <button type="submit" name="logout-submit">logout</button>
-        </form>
-        <a href="signup.php">Signup</a>
-      </div>
+      <?php
+        if(!isset($_SESSION['loggedIn'])) //Wenn User  nicht eingeloggt login und signup button zeigen
+        {
+          echo '<div class="login">';
+          echo '<form action="../private/login.php" method="post">';
+          echo '<input type="text" name="benutzername" placeholder="Username">';
+          echo '<br>';
+          echo '<input type="password" name="passwort" placeholder="Password">';
+          echo '<br>';
+          echo '<button type="submit" name="login-submit">login</button>';
+          echo '</form>';
+          echo '<a href="signup.php">Signup</a>';
+          echo '</div>';
+        }
+        elseif(isset($_SESSION['loggedIn'])) //Wenn User eingeloggt logout button zeigen
+        {
+          echo '<div class="login">';
+          echo '<form action="../private/logout.php" method="post">';
+          echo '<button type="submit" name="logout-submit">logout</button>';
+          echo '</form>';
+          echo '</div>';
+        }
+        ?>
 
       <div class="search">
         <form action="result.php" method="post">
