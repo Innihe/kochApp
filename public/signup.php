@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+	session_start();
+?>
 <html lang="en" dir="ltr">
 <link rel="shortcut icon" type="image/x-icon" href="./3475favicon.ico">
 <link rel="stylesheet" href="stylesheet.css">
@@ -17,7 +20,7 @@
 	    <div class="title">Registrieren</div>
 
 			<div class="signup">
-		 <form action= "includes/signup.inc.php" method="post">
+		 <form action= "../private/signup.php" method="post">
 		 <input type="text" name="uid"placeholder="Username">
 		 <br>
 		 <input type="text" name="mail"placeholder="E-mail">
