@@ -199,6 +199,22 @@
 		dbClose($conn); // Verbindung über dbClose() schliessen, $conn Objekt übergeben
 	}
 
+	function dbRemoveFav($titel, $benutzer)
+	{
+		$benutzerid = dbGetBenutzerID($benutzer);
+
+		$conn = connectDB(); //Funktion connectDB() nutzen um Verbindung herzustellen und Rückgabeobjekt in $conn speichern
+
+		//Insert mit Prepared Statement
+		$deleteStatement = $conn->prepare("DELETE FROM rezepte
+																			WHERE rezepte.titel = ?
+																			AND rezepte.BenutzerkontoID = ?") 
+							        or die($conn->error);
+		$deleteStatement->bind_param("si", $titel, $benutzerid); //$titel und $inhalt wurden als Argumente übergeben, BenutzerkontoID und Email werden aus vorherigem Abfrageergebnisobjekt bezogen
+		$deleteStatement->execute();
+		dbClose($conn); // Verbindung über dbClose() schliessen, $conn Objekt übergeben
+	}
+
   //Wenn DB alles fertig fertig
 	function dbClose($conn)
 	{

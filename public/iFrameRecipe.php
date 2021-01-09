@@ -75,8 +75,13 @@
 				$encodedTitel = urlencode($titel);
 				$encodedZutaten = urlencode($zutaten);
 				$encodedBeschreibung = urlencode($beschreibung);
-        echo "<div id=favButton><a href='../private/addrecipe.php?titel=".$encodedTitel."&zutaten=".$encodedZutaten."&beschreibung=".$encodedBeschreibung."'>Speichern</a></div>";
+        echo "<div id=favButton><a style='background-color:green;' href='../private/addrecipe.php?titel=".$encodedTitel."&zutaten=".$encodedZutaten."&beschreibung=".$encodedBeschreibung."'>Speichern</a></div>";
       }
+			elseif(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true && dbCheckForRecipe($_SESSION['benutzername'], $titel))
+			{
+				$encodedTitel = urlencode($titel);
+				echo "<div id=unFavButton><a style='background-color:red;' href='../private/removerecipe.php?titel=$encodedTitel'>Löschen</a></div>";
+			}
       echo "</div><br>";
       echo "<div id='iFrameZutaten'>";
       echo "<ul>";
