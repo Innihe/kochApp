@@ -81,7 +81,15 @@
 			elseif(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true && dbCheckForRecipe($_SESSION['benutzername'], $titel))
 			{
 				$encodedTitel = urlencode($titel);
-				echo "<div id=unFavButton><a style='background-color:red;' href='../private/removerecipe.php?titel=$encodedTitel'>Löschen</a></div>";
+
+				if(strpos($link, 'lokalesrezept') !== false)
+				{
+					echo "<div id=unFavButton><a style='background-color:red;' href='../private/removelocalrecipe.php?titel=$encodedTitel'>Löschen</a></div>";
+				}
+				else
+				{
+					echo "<div id=unFavButton><a style='background-color:red;' href='../private/removerecipe.php?titel=$encodedTitel'>Löschen</a></div>";
+				}
 			}
       echo "</div><br>";
       echo "<div id='iFrameZutaten'>";
