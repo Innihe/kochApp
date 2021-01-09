@@ -42,7 +42,8 @@
       }
 			elseif(strpos($link, 'lokalesrezept') !== false)
       {
-				$rezept = dbPullRecipe($_GET['name'], $_SESSION['benutzername']);
+				$name = htmlentities($_GET['name']);
+				$rezept = dbPullRecipe($name, $_SESSION['benutzername']);
         $titel = $rezept->titel;
         $zutaten = $rezept->zutaten;
         $beschreibung = $rezept->beschreibung;
