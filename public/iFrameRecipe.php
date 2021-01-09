@@ -108,7 +108,7 @@
       echo "<div id=iFrameBeschreibung>";
       echo nl2br($beschreibung);
       echo "</div>";
-      echo "<div id='iFrameQuelle'> Quelle: <a target='_blank' rel='noopener noreferrer' href=".$link.">$link</a></div>";
+      echo "<div id='iFrameQuelle'> Quelle: <a target='_blank' rel='noopener noreferrer' href=".$link.">Hier klicken!k</a></div>";
 
       //echo "<br><br><br>DEBUG: ".print_r($beschreibung);
 
