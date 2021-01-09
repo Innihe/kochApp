@@ -10,7 +10,10 @@
     $titel = urldecode($titel);
     $titel = htmlentities($titel);
 
-    echo "DEBUG removerecipe.php titel: $titel <br> benutzer: $benutzer";
     dbRemoveFav($titel, $benutzer);
   }
   ?>
+<html>
+<script>
+window.history.back();
+</script>
