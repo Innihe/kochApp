@@ -19,7 +19,7 @@
     <main>
 
     <div class="title">Schmeißrein</div>
-    <div class="msg">Wilkommen auf Schmeißrein.
+    <div class="msg">Willkommen auf Schmeißrein.
       Auf dieser Seite kannst du einfach deine Zutaten einwerfen und es werden dir viele tolle Rezepte angezeigt. </div>
 
       <?php
