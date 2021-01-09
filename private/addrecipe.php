@@ -12,6 +12,8 @@
 
     dbNewFav($titel, $zutaten, $beschreibung, $benutzer);
   }
-  $favs = file_get_contents("../public/favs.php");
-  echo $favs;
- ?>
+  ?>
+<html>
+<script>
+window.history.back();
+</script>
