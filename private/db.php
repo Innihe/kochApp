@@ -202,13 +202,15 @@
 	function dbRemoveFav($titel, $benutzer)
 	{
 		$benutzerid = dbGetBenutzerID($benutzer);
-
+		$titel = html_entity_decode($titel);
+		
 		$conn = connectDB(); //Funktion connectDB() nutzen um Verbindung herzustellen und Rückgabeobjekt in $conn speichern
 
+		//echo "DEBUG db.php dbRemoveFav() titel: $titel <br> benutzerid = $benutzerid";
 		//Insert mit Prepared Statement
 		$deleteStatement = $conn->prepare("DELETE FROM rezepte
 																			WHERE rezepte.titel = ?
-																			AND rezepte.BenutzerkontoID = ?") 
+																			AND rezepte.BenutzerkontoID = ?")
 							        or die($conn->error);
 		$deleteStatement->bind_param("si", $titel, $benutzerid); //$titel und $inhalt wurden als Argumente übergeben, BenutzerkontoID und Email werden aus vorherigem Abfrageergebnisobjekt bezogen
 		$deleteStatement->execute();
