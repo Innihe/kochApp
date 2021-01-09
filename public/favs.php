@@ -23,16 +23,24 @@
       <iframe name="iframe1" src="iframelandingpage.html" frameborder="0"></iframe>
       <?php
 
-			//favoriten aus db holen
-			$favObject = dbPullFavs($_SESSION['benutzername']);
-			//ergebnisobjekt zu liste
+			//Wenn Nutzer eingeloggt ist favs holen
+			if(isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] == true)
+			{
+				//favoriten aus db holen
+				$favObject = dbPullFavs($_SESSION['benutzername']);
+				//ergebnisobjekt zu liste
 
 				echo "<ul>"; //Liste beginnen
 				while ($rezept = $favObject->fetch_object()) // Solange mittels fetch_object() ein weiteres Objekt (eine weitere Zeile) aus dem Objekt $ergebnis der Datei db_pull_all.php
-			{		                                           //der Variable $datensatz zugeordnet werden kann
-				echo "<li><a href='./iFrameRecipe.php?link=lokalesrezept&name=$rezept->titel' target='iframe1'>$rezept->titel</a></li><br>";
-			}
+				{		                                           //der Variable $datensatz zugeordnet werden kann
+					echo "<li><a href='./iFrameRecipe.php?link=lokalesrezept&name=$rezept->titel' target='iframe1'>$rezept->titel</a></li><br>";
+				}
 				echo "</ul>"; //Liste zuende
+			}
+			else
+			{
+				echo "<ul><li><a href='index.php'>Rezeptfavoriten sind nur für eingeloggte Nutzer einsehbar.<br> Bitte klicke hier um zur Hauptseite zurückzugelangen und dich anzumelden!</a></li></ul>";
+			}
 
 
        ?>
