@@ -15,5 +15,6 @@
   ?>
 <html>
 <script>
-parent.location.reload();
+  window.parent.location.href = "../public/favs.php"; 
 </script>
+</html>
